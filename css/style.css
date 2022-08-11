@@ -1,0 +1,12 @@
+table {
+    text-align: center;
+}
+
+th {
+    text-align: center;;
+  }
+
+.codeButton{
+  text-align: right;
+  vertical-align: bottom;
+}

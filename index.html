@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Metodo de Euler</title>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.2/vue.min.js"></script>
+  <!-- <script src="https://unpkg.com/vue"></script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.10.0/math.min.js">
+  </script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+  <style media="screen">
+    path {
+      stroke: steelblue;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: grey;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="container-fluid">
+    <div class="row">
+      <div class="col-md-9">
+        <h2>{{ message }}</h2>
+      </div>
+      
+    </div>
+    <div class="row jumbotron">
+      <div class="row well">
+        <div class="col-md-3">
+          <h4>x<sub>n+1</sub> = x<sub>n</sub> + h</h4>
+        </div>
+        <div class="col-md-3">
+          <h4>y<sub>n+1</sub> = y<sub>n</sub> + h.f(x<sub>n</sub>,y<sub>n</sub>)</h4>
+        </div>
+      </div>
+      <div class="row">
+        <p></p>
+      </div>
+      <div class="row well">
+        <div class="col-md-3">
+          <label>Expresion:</label> (Ejemplo: y^2-x*y)<br> f'(x,y) = <input v-model="equation">
+        </div>
+        <div class="col-md-3 form-group">
+          <label>Valores Iniciales:</label><br>x<sub>0</sub> = <input v-model="xinit"><br>y<sub>0</sub> = <input v-model="yinit">
+        </div>
+        <div class="col-md-3">
+          <label>Paso h:</label><br> h = <input v-model="step">
+        </div>
+        <div class="col-md-3">
+          <label>Cantidad de iteraciones:</label><br>
+          <input type="number" v-model="iterations">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" style="text-align: center;">
+          <button class="btn btn-primary btn-lg" v-on:click="total">Calcular y graficar</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <table class="table table-striped" v-if="seen">
+          <thead>
+            <th>n</th>
+            <th>x<sub>n</sub></th>
+            <th>y<sub>n</sub></th>
+          </thead>
+          <tbody>
+            <tr v-for="item in items">
+              <td>{{ item.val }}</td>
+              <td>{{ item.xn }}</td>
+              <td>{{ item.yn }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-8" id="graph">
+      </div>
+    </div>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        'message': 'Metodo de Euler',
+        'equation': '2x',
+        'xinit': '0',
+        'yinit': '0',
+        'evaluated': '7',
+        'step': '0.1',
+        'seen': false,
+        'iterations': '10',
+        items: []
+      },
+      methods: {
+        total: function() {
+          this.items = [];
+          var f = math.eval('f(x,y)=' + this.equation);
+          this.evaluated = f(this.xinit, this.yinit);
+          while (this.items.length < this.iterations) {
+            if (this.items.length == 0) {
+              this.items.push({
+                'val': this.items.length,
+                'xn': this.xinit,
+                'yn': this.yinit
+              })
+            } else {
+              this.items.push({
+                'val': this.items.length,
+                'xn': parseFloat(this.items[this.items.length - 1].xn) + parseFloat(this.step),
+                'yn': parseFloat(this.items[this.items.length - 1].yn) + parseFloat(this.step) * parseFloat(f(this.items[this.items.length - 1].xn, this.items[this.items.length - 1].yn))
+              });
+            }
+          }
+          this.seen = true;
+          // d3.js library graphing code
+          // Seteo de dimensiones del canvas, grafico
+          var margin = {
+              top: 30,
+              right: 20,
+              bottom: 30,
+              left: 50
+            },
+            width = 600 - margin.left - margin.right,
+            height = 450 - margin.top - margin.bottom;
+
+          // Parse the date / time
+          // var parseDate = d3.time.format("%d-%b-%y").parse;
+
+          // Set the ranges
+          // var x = d3.time.scale().range([0, width]);
+          // var x = d3.scale.linear().range([0, width]);
+          // var y = d3.scale.linear().range([height, 0]);
+
+          var x = d3.scale.linear().range([0, width]);
+          var y = d3.scale.linear().range([height, 0]);
+
+          // Define los ejes
+          var xAxis = d3.svg.axis().scale(x)
+            .orient("bottom").ticks(5);
+
+          var yAxis = d3.svg.axis().scale(y)
+            .orient("left").ticks(5);
+
+          // Define la linea
+          var valueline = d3.svg.line()
+            .x(function(d) {
+              return x(d.xn);
+            })
+            .y(function(d) {
+              return y(d.yn);
+            });
+
+          // Adds the svg canvas
+          d3.select("#graph").selectAll("svg").remove();
+          var svg = d3.select("#graph")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+          // Get the data
+          // d3.json(this.items, function(error, data) {
+          data = this.items;
+          data.forEach(function(d) {
+            // d.xn = parseDate(d.xn);
+            d.xn = +d.xn;
+            d.yn = +d.yn;
+          });
+
+          // Scale the range of the data
+          x.domain(d3.extent(data, function(d) {
+            return d.xn;
+          }));
+          y.domain([d3.min(data, function(d) {
+            // y.domain([d3.extent(data, function(d) {
+            return d.yn
+          }), d3.max(data, function(d) {
+            // y.domain([d3.extent(data, function(d) {
+            return d.yn
+          })]);
+
+          // Add the valueline path.
+          svg.append("path")
+            .attr("class", "line")
+            .attr("d", valueline(data));
+
+          // agrega eje x
+          svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+          // agrega eje y
+          svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+          // });
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>
