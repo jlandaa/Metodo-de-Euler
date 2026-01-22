@@ -42,7 +42,7 @@ Follow these steps to perform a calculation:
 ## 🧰 Libraries and Frameworks
 The project utilizes the following libraries for performance and accuracy:
 
-]**Vue.js (v2.2.2)**: Manages UI reactivity and data binding.
+**Vue.js (v2.2.2)**: Manages UI reactivity and data binding.
 **Math.js (v3.10.0)**: Used for parsing and evaluating mathematical expressions.
 **Bootstrap (v3.3.7)**: Provides the responsive grid system and styling.
 **D3.js (v3)**: Handles dynamic SVG graph generation.
@@ -60,7 +60,7 @@ Since this project fetches its dependencies via CDN, no complex environment setu
 2.  **Verify Structure**: Ensure `style.css` is located inside a folder named `css/` relative to `index.html`.
 3.  **Run**: Simply open `index.html` in any modern web browser.
    
-##Example
+## Application Preview
 <img width="1917" height="950" alt="Ejemplo_Caso_Prueba" src="https://github.com/user-attachments/assets/def45e0c-9851-41fa-8eab-bcaa87f81db8" />
 
 
