@@ -61,7 +61,8 @@ Since this project fetches its dependencies via CDN, no complex environment setu
 3.  **Run**: Simply open `index.html` in any modern web browser.
    
 ## Application Preview
-<img width="1917" height="950" alt="Ejemplo_Caso_Prueba" src="https://github.com/user-attachments/assets/def45e0c-9851-41fa-8eab-bcaa87f81db8" />
+<img width="1919" height="979" alt="Ejemplo_Caso_Prueba" src="https://github.com/user-attachments/assets/baf5c4b2-d841-4a3c-926e-dafe0caeb3e8" />
+
 
 
 
