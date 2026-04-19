@@ -1,5 +1,8 @@
 # Euler Method for 1st Order ODEs
 
+![Status: Maintained](https://img.shields.io/badge/Status-Maintained-brightgreen?style=for-the-badge)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
+
 [![Vue](https://img.shields.io/badge/Vue.js-2.2.2-4fc08d?style=for-the-badge&logo=vue.js&logoColor=white)](https://vuejs.org/)
 [![Math.js](https://img.shields.io/badge/Math.js-3.10.0-37474f?style=for-the-badge&logo=javascript&logoColor=white)](https://mathjs.org/)
 [![D3.js](https://img.shields.io/badge/D3.js-v3-f9a03c?style=for-the-badge&logo=d3.js&logoColor=white)](https://d3js.org/)
