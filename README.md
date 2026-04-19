@@ -12,7 +12,7 @@ This application is an interactive web-based tool designed to solve the simplest
 
 ## 🔗 Live Demo
 Access the hosted application here:
-[**https://jlandaa.github.io/Metodo-de-Euler/**](https://jlandaa.github.io/Metodo-de-Euler/)
+[**https://jlandaa.github.io/Euler-Method/**](https://jlandaa.github.io/Euler-Method/))
 
 ---
 
